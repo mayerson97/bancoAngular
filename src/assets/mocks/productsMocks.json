@@ -1,0 +1,75 @@
+
+[
+    {
+        "id": "1",
+        "name": "Tarjeta de Credito",
+        "description": "Tarjeta de consumo bajo la modalidad de Credito",
+        "logo": "https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg",
+        "date_release": "2023-02-01T00:00:00.000+00:00",
+        "date_revision": "2023-02-01T00:00:00.000+00:00"
+    },
+    {
+        "id": "2",
+        "name": "Tarjeta de Credito",
+        "description": "Tarjeta de consumo bajo la modalidad de Credito",
+        "logo": "https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg",
+        "date_release": "2023-02-01T00:00:00.000+00:00",
+        "date_revision": "2023-02-01T00:00:00.000+00:00"
+    },
+    {
+        "id": "3",
+        "name": "Tarjeta de Credito",
+        "description": "Tarjeta de consumo bajo la modalidad de Credito",
+        "logo": "https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg",
+        "date_release": "2023-02-01T00:00:00.000+00:00",
+        "date_revision": "2023-02-01T00:00:00.000+00:00"
+    },
+    {
+        "id": "4",
+        "name": "Tarjeta de Credito",
+        "description": "Tarjeta de consumo bajo la modalidad de Credito",
+        "logo": "https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg",
+        "date_release": "2023-02-01T00:00:00.000+00:00",
+        "date_revision": "2023-02-01T00:00:00.000+00:00"
+    },
+    {
+        "id": "5",
+        "name": "Tarjeta de Credito",
+        "description": "Tarjeta de consumo bajo la modalidad de Credito",
+        "logo": "https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg",
+        "date_release": "2023-02-01T00:00:00.000+00:00",
+        "date_revision": "2023-02-01T00:00:00.000+00:00"
+    },
+    {
+        "id": "6",
+        "name": "Tarjeta de Credito",
+        "description": "Tarjeta de consumo bajo la modalidad de Credito",
+        "logo": "https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg",
+        "date_release": "2023-02-01T00:00:00.000+00:00",
+        "date_revision": "2023-02-01T00:00:00.000+00:00"
+    },
+    {
+        "id": "7",
+        "name": "mastercard",
+        "description": "Tarjeta de consumo bajo la modalidad de Credito",
+        "logo": "https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg",
+        "date_release": "2023-02-01T00:00:00.000+00:00",
+        "date_revision": "2023-02-01T00:00:00.000+00:00"
+    },
+    {
+        "id": "8",
+        "name": "debito",
+        "description": "Tarjeta de consumo bajo la modalidad de Credito",
+        "logo": "https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg",
+        "date_release": "2023-02-01T00:00:00.000+00:00",
+        "date_revision": "2023-02-01T00:00:00.000+00:00"
+    },
+    {
+        "id": "9",
+        "name": "Credito",
+        "description": "Tarjeta de consumo bajo la modalidad de Credito",
+        "logo": "https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg",
+        "date_release": "2023-02-01T00:00:00.000+00:00",
+        "date_revision": "2023-02-01T00:00:00.000+00:00"
+    }
+]

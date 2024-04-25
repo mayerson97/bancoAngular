@@ -1,0 +1,74 @@
+.container {
+  width: 70%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f2f2f2;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
+}
+
+.linea {
+  border-bottom: 2px solid #ccc;
+  text-align: center;
+  margin-top: 20px;
+}
+
+h1 {
+  font-size: 2rem;
+  text-align: center;
+  white-space: nowrap;
+}
+
+form {
+  margin-top: 5%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+label {
+  margin-bottom: 5px;
+}
+
+.button-send {
+  padding: 10px 20px;
+  background-color: #f3db63;
+  color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 5%;
+}
+.button-send:hover {
+  background-color: #f7e174;
+}
+.button-send:active {
+  background-color: #f3d853;
+}
+
+.button-restart {
+  padding: 10px 20px;
+  background-color: #b3b3b3;
+  color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 5%;
+}
+.button-restart:hover {
+  background-color: #5f5f5f;
+}
+.button-restart:active {
+  background-color: #666666;
+}
+.containerInput {
+  margin-top: 20px;
+  text-align: center;
+}

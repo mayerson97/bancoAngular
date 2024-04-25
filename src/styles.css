@@ -1,0 +1,14 @@
+/* You can add global styles to this file, and also import other style files */
+body {
+    background-color: #ebe3e3da; 
+}
+
+input[type="text"] {
+    width: 270px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    margin-bottom: 16px;
+    border-radius: 5px;
+    box-shadow: inset 0 1px 3px #ddd;
+  }

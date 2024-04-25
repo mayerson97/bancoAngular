@@ -1,0 +1,73 @@
+<div class="containerInput">
+  <input type="text" [(ngModel)]="inputSearchValue" (ngModelChange)="searchProduct()" placeholder="Search.." />
+  <button class="button-add">Agregar</button>
+</div>
+<div class="container">
+  <div class="containerGrid">
+    <table>
+      <thead>
+        <tr>
+          <th>Logo</th>
+          <th>Nombre del producto</th>
+          <th>
+            <div class="columnGrid">
+              <span class="spaceIcon">Descripción</span>
+              <i title="Información adicional">
+                <img style="width: 20px" src="../../../../assets/icons/informativo.png" />
+              </i>
+            </div>
+          </th>
+          <th>
+            <div class="columnGrid">
+              <span class="spaceIcon">Fecha de liberación</span>
+              <i title="Información adicional">
+                <img style="width: 20px" src="../../../../assets/icons/informativo.png" />
+              </i>
+            </div>
+          </th>
+          <th>
+            <div class="columnGrid">
+              <span class="spaceIcon">Fecha de reestructuración</span>
+              <i title="Información adicional">
+                <img style="width: 20px" src="../../../../assets/icons/informativo.png" />
+              </i>
+            </div>
+          </th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of displayList()">
+          <td>
+            <img class="logo" src="{{ product.logo }}" alt="" />
+          </td>
+          <td>{{ product.name }}</td>
+          <td>{{ product.description }}</td>
+          <td>{{ product.date_release }}</td>
+          <td>{{ product.date_revision }}</td>
+          <td>
+            <div class="dropdown">
+              <button class="button-transparent">
+                <img style="width: 10%; height: 1%" src="../../../../assets/icons/tresPuntos.png" />
+              </button>
+              <div class="dropdown-content">
+                <a>Editar</a>
+                <a (click)="deleteProduct(product)">Eliminar</a>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="paginationGrid">
+    <div>
+      <h6>{{ totalRows }} Resultados</h6>
+    </div>
+    <div>
+      <select class="selectPagination" #optionPages (change)="onPageChange(optionPages.value)">
+        <option *ngFor="let size of optionPage">{{ size }}</option>
+      </select>
+    </div>
+  </div>
+</div>
