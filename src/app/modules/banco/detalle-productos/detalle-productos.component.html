@@ -1,6 +1,6 @@
 <div class="containerInput">
   <input type="text" [(ngModel)]="inputSearchValue" (ngModelChange)="searchProduct()" placeholder="Search.." />
-  <button class="button-add">Agregar</button>
+  <button class="button button-add" (click) = 'addProduct()'>Agregar</button>
 </div>
 <div class="container">
   <div class="containerGrid">
@@ -13,7 +13,7 @@
             <div class="columnGrid">
               <span class="spaceIcon">Descripción</span>
               <i title="Información adicional">
-                <img style="width: 20px" src="../../../../assets/icons/informativo.png" />
+                <img alt="Información" style="width: 20px" src="../../../../assets/icons/informativo.png" />
               </i>
             </div>
           </th>
@@ -21,7 +21,7 @@
             <div class="columnGrid">
               <span class="spaceIcon">Fecha de liberación</span>
               <i title="Información adicional">
-                <img style="width: 20px" src="../../../../assets/icons/informativo.png" />
+                <img alt="Información" style="width: 20px" src="../../../../assets/icons/informativo.png" />
               </i>
             </div>
           </th>
@@ -29,7 +29,7 @@
             <div class="columnGrid">
               <span class="spaceIcon">Fecha de reestructuración</span>
               <i title="Información adicional">
-                <img style="width: 20px" src="../../../../assets/icons/informativo.png" />
+                <img  alt="Información" style="width: 20px" src="../../../../assets/icons/informativo.png" />
               </i>
             </div>
           </th>
@@ -48,11 +48,11 @@
           <td>
             <div class="dropdown">
               <button class="button-transparent">
-                <img style="width: 10%; height: 1%" src="../../../../assets/icons/tresPuntos.png" />
+                <img alt="Acciones" style="width: 10%; height: 1%" src="../../../../assets/icons/tresPuntos.png" />
               </button>
               <div class="dropdown-content">
-                <a>Editar</a>
-                <a (click)="deleteProduct(product)">Eliminar</a>
+                <a (click)="editProduct(product)">Editar</a>
+                <a (click)="showConfirmationMessageDeleteProduct(product)">Eliminar</a>
               </div>
             </div>
           </td>
@@ -68,6 +68,28 @@
       <select class="selectPagination" #optionPages (change)="onPageChange(optionPages.value)">
         <option *ngFor="let size of optionPage">{{ size }}</option>
       </select>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="showAlert" class="overlay">
+  <div class="alert">
+      <button class="closebtn" (click)="hideAlert()">&times;</button>
+      <div [ngSwitch]="typeMessage" style="display: flex; align-items: center; justify-content: center; margin-top: 5%;">
+          <img *ngSwitchCase="'error'" alt="" style="width: 20%; height: 10%;" src="../../../../assets/icons/error.png" />
+          <img *ngSwitchCase="'exitoso'" alt="" style="width: 20%; height: 10%;" src="../../../../assets/icons/success.png" />
+      </div>
+      <p style="text-align: center; margin-top: 10%;">{{alertMessage}}</p>
+  </div>
+</div>
+
+<div *ngIf="showAlertConfirmation" class="overlay">
+  <div class="alert">
+      <p style="text-align: center; margin-top: 10%;">{{confirmationMessage}}</p>
+      <div class="linea"></div>
+      <div class="containerAlertButton">
+        <button  (click) = hideAlertConfirmation() class="button button-cancel">Cancelar</button>
+        <button  (click) = processAlertConfirmation() class=" button button-confirm">Confirmar</button>
     </div>
   </div>
 </div>

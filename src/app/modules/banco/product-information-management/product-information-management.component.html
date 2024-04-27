@@ -1,36 +1,84 @@
+
 <div class="container">
     <h1>Formulario de Registro</h1>
     <div class="linea"></div>
     <div class="form">
-        <form>
+        <form [formGroup]="formProductGroup">
             <div class="form-group">
-                <label>ID</label>
-                <input required type="text">
+                <label for="inputId">ID</label>
+                <input
+                    [ngClass]="{ 'input-invalid': isValidFormGroupStatus('inputId', 'invalid'), 'input-valid':  isValidFormGroupStatus('inputId', 'valid')}"
+                    minlength="3" maxlength="10" required name="inputId" id="inputId" formControlName='inputId'
+                    type="text">
+                <label for="inputId" class="label-validator" *ngIf="isValidFormGroupStatus('inputId', 'invalid')">
+                    Id no válido!
+                </label>
             </div>
             <div class="form-group">
-                <label class="label">Nombre</label>
-                <input required type="text">
+                <label for="inputName">Nombre</label>
+                <input
+                    [ngClass]="{ 'input-invalid': isValidFormGroupStatus('inputName', 'invalid'), 'input-valid':  isValidFormGroupStatus('inputName', 'valid')}"
+                    minlength="5" maxlength="100" required name="inputName" id="inputName" type="text" formControlName='inputName'>
+                <label for="inputName" class="label-validator" *ngIf="isValidFormGroupStatus('inputName', 'invalid')">
+                    Nombre no válido!
+                </label>
             </div>
             <div class="form-group">
-                <label>Descripción</label>
-                <input required type="text">
+                <label for="inputDescription">Descripción</label>
+                <input
+                    [ngClass]="{ 'input-invalid': isValidFormGroupStatus('inputDescription', 'invalid'), 'input-valid':  isValidFormGroupStatus('inputDescription', 'valid')}"
+                    minlength="10" maxlength="200" required name="inputDescription" id="inputDescription" type="text" formControlName='inputDescription'>
+                <label for="inputDescription" class="label-validator"
+                    *ngIf="isValidFormGroupStatus('inputDescription', 'invalid')">
+                    Descripción no válida!
+                </label>
             </div>
             <div class="form-group">
-                <label>Logo</label>
-                <input required type="text">
+                <label for="inputLogo">Logo</label>
+                <input
+                    [ngClass]="{ 'input-invalid': isValidFormGroupStatus('inputLogo', 'invalid'), 'input-valid':  isValidFormGroupStatus('inputLogo', 'valid')}"
+                    type="text" formControlName='inputLogo'>
+                <label for="inputLogo" class="label-validator" *ngIf="isValidFormGroupStatus('inputLogo', 'invalid')">
+                    Logo no válido!
+                </label>
             </div>
             <div class="form-group">
-                <label>Fecha Liberación</label>
-                <input required type="text">
+                <label for="inputDateRelease">Fecha Revisión</label>
+                <input
+                    [ngClass]="{ 'input-invalid': isValidFormGroupStatusWithOtherValidations('inputDateRelease', 'invalid', validateInputDateRelease()), 
+                                 'input-valid':  isValidFormGroupStatusWithOtherValidations('inputDateRelease', 'valid', validateInputDateRelease())}"
+                    name="inputDateRelease" id="inputDateRevision" type="date" formControlName='inputDateRelease'>
+                <label for="inputDateRelease" class="label-validator"
+                    *ngIf="isValidFormGroupStatusWithOtherValidations('inputDateRelease', 'invalid', validateInputDateRelease())">
+                    Fecha Revisión no válida!
+                </label>
             </div>
             <div class="form-group">
-                <label>Fecha Revisión</label>
-                <input required type="text">
+                <label for="inputDateRevision">Fecha Revisión</label>
+                <input
+                    [ngClass]="{ 'input-invalid': isValidFormGroupStatusWithOtherValidations('inputDateRevision', 'invalid', validateInputDateRevision()), 
+                                 'input-valid':  isValidFormGroupStatusWithOtherValidations('inputDateRevision', 'valid', validateInputDateRevision())}"
+                    name="inputDateRevision" id="inputDateRevision" type="date" formControlName='inputDateRevision'>
+                <label for="inputDateRevision" class="label-validator"
+                    *ngIf="isValidFormGroupStatusWithOtherValidations('inputDateRevision', 'invalid', validateInputDateRevision())">
+                    Fecha Revisión no válida!
+                </label>
             </div>
         </form>
     </div>
     <div class="containerInput">
-        <button class="button-restart">Reiniciar</button>
-        <button class="button-send">Enviar</button>
+        <button (click)="clearForm()" class="button button-restart">Reiniciar</button>
+        <button *ngIf ="!isEdit" (click)="sendAdd()" class=" button button-send">Enviar</button>
+        <button *ngIf ="isEdit" (click)="sendEdit()" class=" button button-send">Enviar</button>
+    </div>
+</div>
+<div *ngIf="showAlert" class="overlay">
+    <div class="alert">
+        <button class="closebtn" (click)="hideAlet()">&times;</button>
+        <div [ngSwitch]="typeMessage" style="display: flex; align-items: center; justify-content: center; margin-top: 5%;">
+            <img *ngSwitchCase="'error'" alt="" style="width: 20%; height: 10%;" src="../../../../assets/icons/error.png" />
+            <img *ngSwitchCase="'exitoso'" alt="" style="width: 20%; height: 10%;" src="../../../../assets/icons/success.png" />
+        </div>
+        <p style="text-align: center; margin-top: 10%;">{{alertMessage}}</p>
     </div>
 </div>

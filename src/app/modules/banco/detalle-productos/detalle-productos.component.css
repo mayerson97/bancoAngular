@@ -13,7 +13,7 @@
   margin: 1% auto;
   max-height: 400px;
   min-width: 400px;
-  overflow-y: auto !important;
+  overflow-y: auto;
 }
 
 .containerInput {
@@ -88,12 +88,7 @@ th {
 }
 
 .button-add {
-  padding: 10px 20px;
   background-color: #f3db63;
-  color: rgb(0, 0, 0);
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
 }
 .button-add:hover {
   background-color: #f7e174;
@@ -123,6 +118,7 @@ th {
   overflow: auto;
   z-index: 1;
   box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.4);
+  background-color: #ffffff;
 }
 .dropdown:hover .dropdown-content {
   display: block;
@@ -137,3 +133,89 @@ th {
   background-color: #00A4BD;
 }
 
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  overflow-x: auto;
+}
+
+.alert {
+  padding: 20px;
+  background-color: #ffffff;
+  color: black;
+  border-radius: 5px;
+  width: 25%;
+  height: auto;
+  max-height: 600px;
+  margin: auto;
+}
+
+.closebtn {
+  margin-left: 15px;
+  color: black;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+  border-radius: 5px;
+}
+
+.closebtn:hover {
+  color: black;
+}
+
+.button-confirm {
+  background-color: #f3db63;
+}
+
+.button-confirm:hover {
+  background-color: #f7e174;
+}
+
+.button-confirm:active {
+  background-color: #f3d853;
+}
+
+.button-cancel {
+  background-color: #b3b3b3;
+
+}
+
+.button-cancel:hover {
+  background-color: #5f5f5f;
+}
+
+.button-cancel:active {
+  background-color: #666666;
+}
+
+.containerAlertButton {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.skeleton-logo,
+.skeleton-text,
+.skeleton-actions {
+  width: 100px; /* Ancho del esqueleto */
+  height: 20px; /* Altura del esqueleto */
+  background-color: #f0f0f0; /* Color de fondo del esqueleto */
+  border-radius: 4px; /* Bordes redondeados */
+  margin-bottom: 5px; /* Espacio entre filas */
+}
+
+.skeleton-logo {
+  width: 50px; /* Ancho del esqueleto del logo */
+}
+
+.skeleton-actions {
+  width: 80px; /* Ancho del esqueleto de las acciones */
+}

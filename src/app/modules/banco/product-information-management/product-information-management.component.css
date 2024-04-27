@@ -1,23 +1,13 @@
 .container {
   width: 70%;
-  margin: 0 auto;
+  margin: auto;
+  margin-top: 5%;
   padding: 20px;
   background-color: #f2f2f2;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   overflow-x: auto;
-}
-
-.linea {
-  border-bottom: 2px solid #ccc;
-  text-align: center;
-  margin-top: 20px;
-}
-
-h1 {
-  font-size: 2rem;
-  text-align: center;
-  white-space: nowrap;
+  position: relative;
 }
 
 form {
@@ -25,6 +15,12 @@ form {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   grid-gap: 20px;
+}
+
+h1 {
+  font-size: 2rem;
+  text-align: center;
+  white-space: nowrap;
 }
 
 .form-group {
@@ -37,38 +33,77 @@ label {
   margin-bottom: 5px;
 }
 
-.button-send {
-  padding: 10px 20px;
-  background-color: #f3db63;
-  color: rgb(0, 0, 0);
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-left: 5%;
+.label-validator {
+  color: red;
+  font-size: 11px;
+  font-family: Arial, sans-serif;
 }
+
+.button-send {
+  background-color: #f3db63;
+}
+
 .button-send:hover {
   background-color: #f7e174;
 }
+
 .button-send:active {
   background-color: #f3d853;
 }
 
 .button-restart {
-  padding: 10px 20px;
   background-color: #b3b3b3;
-  color: rgb(0, 0, 0);
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-left: 5%;
+
 }
+
 .button-restart:hover {
   background-color: #5f5f5f;
 }
+
 .button-restart:active {
   background-color: #666666;
 }
+
 .containerInput {
   margin-top: 20px;
   text-align: center;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  overflow-x: auto;
+}
+
+.alert {
+  padding: 20px;
+  background-color: #ffffff;
+  color: black;
+  border-radius: 5px;
+  width: 25%;
+  height: auto;
+  max-height: 600px;
+  margin: auto;
+}
+
+.closebtn {
+  margin-left: 15px;
+  color: black;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+  border-radius: 5px;
+}
+
+.closebtn:hover {
+  color: black;
 }

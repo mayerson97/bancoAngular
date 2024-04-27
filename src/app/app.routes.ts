@@ -3,7 +3,7 @@ import { DetalleProductosComponent } from './modules/banco/detalle-productos/det
 import { ProductInformationManagementComponent } from './modules/banco/product-information-management/product-information-management.component';
 
 export const routes: Routes = [
-    { path: 'detail', component: DetalleProductosComponent },
-    { path: 'management', component: ProductInformationManagementComponent },
+    { path: 'detalle', component: DetalleProductosComponent },
+    { path: 'gestionar', component: ProductInformationManagementComponent },
     { path: '**',  component: DetalleProductosComponent },
 ];
