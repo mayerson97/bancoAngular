@@ -5,7 +5,7 @@ import { Router, RouterModule } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormsModule } from '@angular/forms';
+import { FormBuilder, FormsModule, Validators } from '@angular/forms';
 import { BancoServices } from '../../../services/banco/BancoServices.service';
 import { DataSharedService } from '../../../services/banco/DataSharedService';
 import { ValidationsUtil } from '../../../util/ValidationsUtil';
@@ -18,7 +18,6 @@ describe('ProductInformationManagementComponent', () => {
   };
   const mockRouterNavigate = jest.fn();
   const mockValidation = { checkIfLesserOptionPage: jest.fn(), isOneYearOfDifference: jest.fn() };
-
   const mockDataSharedService = { setProduct: jest.fn(), getProduct: jest.fn() };
   let router: Router;
   let component: ProductInformationManagementComponent;
@@ -81,6 +80,143 @@ describe('ProductInformationManagementComponent', () => {
       component.loadProductToEdit()
       expect(component.isEdit).toBe(true);
       expect(component.formProductGroup.status).toBe('VALID');
+    });
+  });
+
+  describe('validateInformationForm', () => {
+    it('debe devolver un error ya que es false validateInputDateRelease debido a que es inferior a la fecha actual', () => {
+      jest.spyOn(component, 'validateInputDateRelease').mockReturnValue(false);
+      const result = component.validateInformationForm()
+      expect(component.showAlert).toBe(true);
+      expect(component.typeMessage).toBe('error');
+      expect(component.alertMessage).toBe('Por favor valide la información del formulario');
+      expect(result).toBe(false);
+    });
+
+    it('debe devolver un error ya que es false validateInputDateRevision debido a que nos hay difenrencia de 1 año entre las fechas', () => {
+      jest.spyOn(component, 'validateInputDateRelease').mockReturnValue(true);
+      jest.spyOn(component, 'validateInputDateRevision').mockReturnValue(false);
+      const result = component.validateInformationForm()
+      expect(component.showAlert).toBe(true);
+      expect(component.typeMessage).toBe('error');
+      expect(component.alertMessage).toBe('Por favor valide la información del formulario');
+      expect(result).toBe(false);
+    });
+
+
+    it('debe devolver un error ya que el formulario es invalido', () => {
+      jest.spyOn(component, 'validateInputDateRelease').mockReturnValue(true);
+      jest.spyOn(component, 'validateInputDateRevision').mockReturnValue(true);
+      component.clearForm()
+      const result = component.validateInformationForm()
+      expect(component.showAlert).toBe(true);
+      expect(component.typeMessage).toBe('error');
+      expect(component.alertMessage).toBe('Por favor valide la información del formulario');
+      expect(result).toBe(false);
+    });
+
+    it('debe devolver un error si el id ya existe y no es actualización', () => {
+      jest.spyOn(component, 'validateInputDateRelease').mockReturnValue(true);
+      jest.spyOn(component, 'validateInputDateRevision').mockReturnValue(true);
+      jest.spyOn(component, 'validateExistenceId').mockReturnValue(true);
+      component.isEdit = false
+      const result = component.validateInformationForm()
+      expect(component.showAlert).toBe(true);
+      expect(component.typeMessage).toBe('error');
+      expect(component.alertMessage).toBe('El id ya existe');
+      expect(result).toBe(false);
+    });
+
+    it('debe devolver exitoso si los datos del son valido y si el id no existe al crear', () => {
+      jest.spyOn(component, 'validateInputDateRelease').mockReturnValue(true);
+      jest.spyOn(component, 'validateInputDateRevision').mockReturnValue(true);
+      jest.spyOn(component, 'validateExistenceId').mockReturnValue(false);
+      const fechaOne = new Date('2023-01-01')
+      const fechaDos = new Date('2024-01-01')
+
+      component.formProductGroup = formBuilder.group({
+        inputId: [{ value: '123', disabled: false }, [Validators.required, Validators.minLength(3), Validators.maxLength(10)]],
+        inputName: ['12345', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
+        inputDescription: ['1234512345', [Validators.required, Validators.minLength(10), Validators.maxLength(200)]],
+        inputLogo: ['Logo', [Validators.required]],
+        inputDateRelease: [fechaOne, [Validators.required]],
+        inputDateRevision: [fechaDos, [Validators.required]],
+      });
+      component.isEdit = false
+      const result = component.validateInformationForm()
+      expect(result).toBe(true);
+    });
+
+    it('debe devolver exitoso al editar si los datos del son valido y si el id existe ', () => {
+      jest.spyOn(component, 'validateInputDateRelease').mockReturnValue(true);
+      jest.spyOn(component, 'validateInputDateRevision').mockReturnValue(true);
+      jest.spyOn(component, 'validateExistenceId').mockReturnValue(true);
+      const fechaOne = new Date('2023-01-01')
+      const fechaDos = new Date('2024-01-01')
+
+      component.formProductGroup = formBuilder.group({
+        inputId: [{ value: '123', disabled: false }, [Validators.required, Validators.minLength(3), Validators.maxLength(10)]],
+        inputName: ['12345', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
+        inputDescription: ['1234512345', [Validators.required, Validators.minLength(10), Validators.maxLength(200)]],
+        inputLogo: ['Logo', [Validators.required]],
+        inputDateRelease: [fechaOne, [Validators.required]],
+        inputDateRevision: [fechaDos, [Validators.required]],
+      });
+      component.isEdit = true
+      const result = component.validateInformationForm()
+      expect(result).toBe(true);
+    });
+  });
+  describe('clearForm', () => {
+    it('debe limpliar el formulario a excepción del id cuando se edita', () => {
+      const mockProduct = Product.crear('123', '12345', '1234512345',
+        'Logo', new Date(), new Date())
+
+      const fechaOne = new Date('2023-01-01')
+      const fechaDos = new Date('2024-01-01')
+
+      component.formProductGroup = formBuilder.group({
+        inputId: [{ value: '123', disabled: false }, [Validators.required, Validators.minLength(3), Validators.maxLength(10)]],
+        inputName: ['12345', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
+        inputDescription: ['1234512345', [Validators.required, Validators.minLength(10), Validators.maxLength(200)]],
+        inputLogo: ['Logo', [Validators.required]],
+        inputDateRelease: [fechaOne, [Validators.required]],
+        inputDateRevision: [fechaDos, [Validators.required]],
+      });
+
+      mockDataSharedService.getProduct.mockReturnValue(mockProduct);
+      component.clearForm()
+      expect(component.formProductGroup.get('inputId')?.value).toBe('123');
+      expect(component.formProductGroup.status).toBe('INVALID');
+      expect(component.formProductGroup.value.inputName).toBe(null);
+      expect(component.formProductGroup.value.inputDescription).toBe(null);
+      expect(component.formProductGroup.value.inputLogo).toBe(null);
+      expect(component.formProductGroup.value.inputDateRelease).toBe(null);
+      expect(component.formProductGroup.value.inputDateRevision).toBe(null);
+    });
+
+    it('debe limpliar el formulario crear', () => {
+
+      const fechaOne = new Date('2023-01-01')
+      const fechaDos = new Date('2024-01-01')
+
+      component.formProductGroup = formBuilder.group({
+        inputId: [{ value: '123', disabled: false }, [Validators.required, Validators.minLength(3), Validators.maxLength(10)]],
+        inputName: ['12345', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
+        inputDescription: ['1234512345', [Validators.required, Validators.minLength(10), Validators.maxLength(200)]],
+        inputLogo: ['Logo', [Validators.required]],
+        inputDateRelease: [fechaOne, [Validators.required]],
+        inputDateRevision: [fechaDos, [Validators.required]],
+      });
+      mockDataSharedService.getProduct.mockImplementation()
+      component.clearForm()
+      expect(component.formProductGroup.value.inputId).toBe(null);
+      expect(component.formProductGroup.value.inputName).toBe(null);
+      expect(component.formProductGroup.value.inputDescription).toBe(null);
+      expect(component.formProductGroup.value.inputLogo).toBe(null);
+      expect(component.formProductGroup.value.inputDateRelease).toBe(null);
+      expect(component.formProductGroup.value.inputDateRevision).toBe(null);
+
     });
   });
 
@@ -259,7 +395,7 @@ describe('ProductInformationManagementComponent', () => {
       const mockObservable = of(mockProducts);
 
       bancoServicesSpy.verifyExistenceId.mockReturnValue(mockObservable as unknown as Observable<boolean>);
-      
+
       const result = component.validateExistenceId('123');
 
       expect(result).toBe(true);
@@ -282,4 +418,171 @@ describe('ProductInformationManagementComponent', () => {
     });
   });
 
+
+  describe('isValidFormGroupStatus', () => {
+    it('debe validarse el estado valid de los campos dentro del formulario cuando ya fue manipulado por el usuario', () => {
+
+      const fechaOne = new Date('2023-01-01')
+      const fechaDos = new Date('2024-01-01')
+     component.formProductGroup = formBuilder.group({
+        inputId: ['123'],
+        inputName: ['12345'],
+        inputDescription: ['1234512345'],
+        inputLogo: ['Logo'],
+        inputDateRelease: [fechaOne],
+        inputDateRevision: [fechaDos]
+      });
+
+     component.formProductGroup.get('inputId')?.markAsTouched();
+     component.formProductGroup.get('inputName')?.markAsTouched();
+     component.formProductGroup.get('inputDescription')?.markAsTouched();
+     component.formProductGroup.get('inputLogo')?.markAsTouched();
+     component.formProductGroup.get('inputDateRelease')?.markAsTouched();
+     component.formProductGroup.get('inputDateRevision')?.markAsTouched();
+
+      const result = component.isValidFormGroupStatus('inputId', 'valid')
+      && component.isValidFormGroupStatus('inputName', 'valid')
+      && component.isValidFormGroupStatus('inputDescription', 'valid')
+      && component.isValidFormGroupStatus('inputLogo', 'valid')
+      && component.isValidFormGroupStatus('inputDateRelease', 'valid')
+      && component.isValidFormGroupStatus('inputDateRevision', 'valid')
+      expect(result).toBe(true)
+    });
+
+    it('debe validarse el estado valid de los campos dentro del formulario cuando no fue manipulado por el usuario', () => {
+
+      const fechaOne = new Date('2023-01-01')
+      const fechaDos = new Date('2024-01-01')
+     component.formProductGroup = formBuilder.group({
+        inputId: ['123'],
+        inputName: ['12345'],
+        inputDescription: ['1234512345'],
+        inputLogo: ['Logo'],
+        inputDateRelease: [fechaOne],
+        inputDateRevision: [fechaDos]
+      });
+
+      const result = component.isValidFormGroupStatus('inputId', 'valid')
+      && component.isValidFormGroupStatus('inputName', 'valid')
+      && component.isValidFormGroupStatus('inputDescription', 'valid')
+      && component.isValidFormGroupStatus('inputLogo', 'valid')
+      && component.isValidFormGroupStatus('inputDateRelease', 'valid')
+      && component.isValidFormGroupStatus('inputDateRevision', 'valid')
+      expect(result).toBe(false)
+    });
+
+    it('debe validarse el estado inValid de los campos dentro del formulario cuando ya fue manipulado por el usuario', () => {
+
+
+     component.formProductGroup.get('inputId')?.markAsTouched();
+     component.formProductGroup.get('inputName')?.markAsTouched();
+     component.formProductGroup.get('inputDescription')?.markAsTouched();
+     component.formProductGroup.get('inputLogo')?.markAsTouched();
+     component.formProductGroup.get('inputDateRelease')?.markAsTouched();
+     component.formProductGroup.get('inputDateRevision')?.markAsTouched();
+
+      const result = component.isValidFormGroupStatus('inputId', 'invalid')
+      && component.isValidFormGroupStatus('inputName', 'invalid')
+      && component.isValidFormGroupStatus('inputDescription', 'invalid')
+      && component.isValidFormGroupStatus('inputLogo', 'invalid')
+      && component.isValidFormGroupStatus('inputDateRelease', 'invalid')
+      && component.isValidFormGroupStatus('inputDateRevision', 'invalid')
+      expect(result).toBe(true)
+    });
+
+    it('debe validarse el estado invalid de los campos dentro del formulario cuando no fue manipulado por el usuario', () => {
+      const result = component.isValidFormGroupStatus('inputId', 'invalid')
+      && component.isValidFormGroupStatus('inputName', 'invalid')
+      && component.isValidFormGroupStatus('inputDescription', 'invalid')
+      && component.isValidFormGroupStatus('inputLogo', 'invalid')
+      && component.isValidFormGroupStatus('inputDateRelease', 'invalid')
+      && component.isValidFormGroupStatus('inputDateRevision', 'invalid')
+      expect(result).toBe(false)
+    });
+
+  });
+
+
+  describe('isValidFormGroupStatusWithOtherValidations', () => {
+    it('debe validarse el estado valid de los campos dentro del formulario cuando ya fue manipulado por el usuario', () => {
+
+      const fechaOne = new Date('2023-01-01')
+      const fechaDos = new Date('2024-01-01')
+     component.formProductGroup = formBuilder.group({
+        inputId: ['123'],
+        inputName: ['12345'],
+        inputDescription: ['1234512345'],
+        inputLogo: ['Logo'],
+        inputDateRelease: [fechaOne],
+        inputDateRevision: [fechaDos]
+      });
+
+     component.formProductGroup.get('inputId')?.markAsTouched();
+     component.formProductGroup.get('inputName')?.markAsTouched();
+     component.formProductGroup.get('inputDescription')?.markAsTouched();
+     component.formProductGroup.get('inputLogo')?.markAsTouched();
+     component.formProductGroup.get('inputDateRelease')?.markAsTouched();
+     component.formProductGroup.get('inputDateRevision')?.markAsTouched();
+
+     const result = component.isValidFormGroupStatusWithOtherValidations('inputId', 'valid', true)
+     && component.isValidFormGroupStatusWithOtherValidations('inputName', 'valid', true)
+      && component.isValidFormGroupStatusWithOtherValidations('inputDescription', 'valid', true)
+      && component.isValidFormGroupStatusWithOtherValidations('inputLogo', 'valid', true)
+      && component.isValidFormGroupStatusWithOtherValidations('inputDateRelease', 'valid', true)
+      && component.isValidFormGroupStatusWithOtherValidations('inputDateRevision', 'valid', true)
+      expect(result).toBe(true)
+    });
+
+    it('debe validarse el estado valid de los campos dentro del formulario cuando no fue manipulado por el usuario', () => {
+
+      const fechaOne = new Date('2023-01-01')
+      const fechaDos = new Date('2024-01-01')
+     component.formProductGroup = formBuilder.group({
+        inputId: ['123'],
+        inputName: ['12345'],
+        inputDescription: ['1234512345'],
+        inputLogo: ['Logo'],
+        inputDateRelease: [fechaOne],
+        inputDateRevision: [fechaDos]
+      });
+
+      const result = component.isValidFormGroupStatusWithOtherValidations('inputId', 'valid', true)
+      && component.isValidFormGroupStatusWithOtherValidations('inputName', 'valid', true)
+       && component.isValidFormGroupStatusWithOtherValidations('inputDescription', 'valid', true)
+       && component.isValidFormGroupStatusWithOtherValidations('inputLogo', 'valid', true)
+       && component.isValidFormGroupStatusWithOtherValidations('inputDateRelease', 'valid', true)
+       && component.isValidFormGroupStatusWithOtherValidations('inputDateRevision', 'valid', true)
+      expect(result).toBe(false)
+    });
+
+    it('debe validarse el estado inValid de los campos dentro del formulario cuando ya fue manipulado por el usuario', () => {
+
+
+     component.formProductGroup.get('inputId')?.markAsTouched();
+     component.formProductGroup.get('inputName')?.markAsTouched();
+     component.formProductGroup.get('inputDescription')?.markAsTouched();
+     component.formProductGroup.get('inputLogo')?.markAsTouched();
+     component.formProductGroup.get('inputDateRelease')?.markAsTouched();
+     component.formProductGroup.get('inputDateRevision')?.markAsTouched();
+
+     const result = component.isValidFormGroupStatusWithOtherValidations('inputId', 'invalid', true)
+     && component.isValidFormGroupStatusWithOtherValidations('inputName', 'invalid', true)
+      && component.isValidFormGroupStatusWithOtherValidations('inputDescription', 'invalid', true)
+      && component.isValidFormGroupStatusWithOtherValidations('inputLogo', 'invalid', true)
+      && component.isValidFormGroupStatusWithOtherValidations('inputDateRelease', 'invalid', true)
+      && component.isValidFormGroupStatusWithOtherValidations('inputDateRevision', 'invalid', true)
+      expect(result).toBe(true)
+    });
+
+    it('debe validarse el estado invalid de los campos dentro del formulario cuando no fue manipulado por el usuario', () => {
+      const result = component.isValidFormGroupStatusWithOtherValidations('inputId', 'invalid', true)
+      && component.isValidFormGroupStatusWithOtherValidations('inputName', 'invalid', true)
+       && component.isValidFormGroupStatusWithOtherValidations('inputDescription', 'invalid', true)
+       && component.isValidFormGroupStatusWithOtherValidations('inputLogo', 'invalid', true)
+       && component.isValidFormGroupStatusWithOtherValidations('inputDateRelease', 'invalid', true)
+       && component.isValidFormGroupStatusWithOtherValidations('inputDateRevision', 'invalid', true)
+      expect(result).toBe(false)
+    });
+
+  });
 });

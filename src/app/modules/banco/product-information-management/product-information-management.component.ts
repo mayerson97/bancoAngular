@@ -161,14 +161,14 @@ export class ProductInformationManagementComponent {
   }
 
   validateInformationForm(): boolean {
-    if (!this.validateInputDateRelease() && !this.validateInputDateRevision() && this.formProductGroup.status === 'INVALID') {
+    if (!this.validateInputDateRelease() || !this.validateInputDateRevision() || this.formProductGroup.status === 'INVALID') {
       this.showAlert = true;
       this.typeMessage = 'error'
       this.alertMessage = 'Por favor valide la información del formulario'
       return false
     }
-    console.log(this.formProductGroup);
-    if (this.validateExistenceId(this.formProductGroup.get('inputId')?.value)) {
+    
+    if (this.validateExistenceId(this.formProductGroup.get('inputId')?.value) && !this.isEdit ) {
       this.showAlert = true;
       this.typeMessage = 'error'
       this.alertMessage = 'El id ya existe'
