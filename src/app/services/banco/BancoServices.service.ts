@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Product } from "../../models/Product";
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -24,36 +24,31 @@ export class BancoServices {
     return this.http.get<boolean>(url);
   }
 
-  createProduc(product: Product): Observable<Product[]> {
-    /*const headers = new HttpHeaders({
+  createProduct(product: Product): Observable<Product[]> {
+    const headers = new HttpHeaders({
       'Content-Type': 'application/json', 
       'authorId': 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789' 
     });
-    return this.http.post<Product[]>(`${this.URL}`, product, { headers });
-    */
-    return this.http.get<Product[]>(this.URLMOCK + 'productsMocks.json');
+    
+    return this.http.post<Product[]>(`${this.URLMOCK}productsMocks.json`, product, { headers });
   }
 
-  editProduc(product: Product): Observable<Product[]> {
-    /*const headers = new HttpHeaders({
+  editProduct(product: Product): Observable<Product[]> {
+    const headers = new HttpHeaders({
       'Content-Type': 'application/json', 
       'authorId': 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789' 
     });
-    return this.http.put<Product[]>(`${this.URL}`, product, { headers });
-    */
-    return this.http.get<Product[]>(this.URLMOCK + 'productsMocks.json');
+    
+    return this.http.put<Product[]>(`${this.URLMOCK}productsMocks.json`, product, { headers });
   }
 
   deleteProduct(id: string): Observable<string> {
-    /*
+    
     const headers = new HttpHeaders({
       'Content-Type': 'application/json', 
       'authorId': 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789' 
     });
 
-    return this.http.delete<string>(`${this.URL}?id=${id}`, { headers });
-    */
-
-    return of('exitoso')
+    return this.http.delete<string>(`${this.URLMOCK}productsMocks.json`, { headers });
   }
 }

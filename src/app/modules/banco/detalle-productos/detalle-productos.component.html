@@ -36,7 +36,8 @@
           <th></th>
         </tr>
       </thead>
-      <tbody>
+
+      <tbody *ngIf="!isLoadSkeleton">
         <tr *ngFor="let product of displayList()">
           <td>
             <img class="logo" src="{{ product.logo }}" alt="" />
@@ -58,6 +59,29 @@
           </td>
         </tr>
       </tbody>
+      <tbody *ngIf="isLoadSkeleton" >
+        <tr *ngFor="let skeleto of dataSkeleton">
+          <td>
+            <div class="skeleton-logo"></div>
+          </td>
+          <td>
+            <div class="skeleton-text"></div>
+          </td>
+          <td>
+            <div class="skeleton-text"></div>
+          </td>
+          <td>
+            <div class="skeleton-text"></div>
+          </td>
+          <td>
+            <div class="skeleton-text"></div>
+          </td>
+          <td>
+            <div class="skeleton-actions"></div>
+          </td>
+        </tr>
+      </tbody>
+
     </table>
   </div>
   <div class="paginationGrid">

@@ -55,6 +55,7 @@ th {
   background-color: #ccc;
   border-radius: 50%;
 }
+
 .pagination {
   max-width: 800px;
   margin: 0 auto;
@@ -90,9 +91,11 @@ th {
 .button-add {
   background-color: #f3db63;
 }
+
 .button-add:hover {
   background-color: #f7e174;
 }
+
 .button-add:active {
   background-color: #f3d853;
 }
@@ -117,17 +120,20 @@ th {
   width: 100%;
   overflow: auto;
   z-index: 1;
-  box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.4);
+  box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.4);
   background-color: #ffffff;
 }
+
 .dropdown:hover .dropdown-content {
   display: block;
 }
+
 .dropdown-content a {
   display: block;
   color: #000000;
   padding: 5px;
 }
+
 .dropdown-content a:hover {
   color: #FFFFFF;
   background-color: #00A4BD;
@@ -202,20 +208,33 @@ th {
   text-align: center;
 }
 
+@keyframes loading {
+  0% {
+    background-color: #f0f0f0;
+  }
+  50% {
+    background-color: #e0e0e0;
+  }
+  100% {
+    background-color: #f0f0f0;
+  }
+}
+
 .skeleton-logo,
 .skeleton-text,
 .skeleton-actions {
-  width: 100px; /* Ancho del esqueleto */
-  height: 20px; /* Altura del esqueleto */
-  background-color: #f0f0f0; /* Color de fondo del esqueleto */
-  border-radius: 4px; /* Bordes redondeados */
-  margin-bottom: 5px; /* Espacio entre filas */
+  width: 100px;
+  height: 20px;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  margin-bottom: 5px;
+  animation: loading 1s infinite linear;
 }
 
 .skeleton-logo {
-  width: 50px; /* Ancho del esqueleto del logo */
+  width: 50px;
 }
 
 .skeleton-actions {
-  width: 80px; /* Ancho del esqueleto de las acciones */
+  width: 80px;
 }

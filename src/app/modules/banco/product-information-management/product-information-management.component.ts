@@ -26,6 +26,7 @@ export class ProductInformationManagementComponent {
   typeMessage: string = ''
   isDisabledInputId: boolean = false
   isEdit: boolean = false
+  isLoading: boolean = false
 
   constructor(private formBuilder: FormBuilder, private bancoServices: BancoServices,
     private validationsUtil: ValidationsUtil, private dataSharedService: DataSharedService) {
@@ -66,7 +67,7 @@ export class ProductInformationManagementComponent {
       const formData = this.formProductGroup.value
       const request = Product.crear(formData.inputId, formData.inputName, formData.inputDescription,
         formData.inputLogo, formData.inputDateRelease, formData.inputDateRevision)
-      this.createProduct(request);
+       this.createProduct(request)
     }
   }
 
@@ -80,14 +81,17 @@ export class ProductInformationManagementComponent {
   }
 
   createProduct(product: Product) {
-    this.bancoServices.createProduc(product).pipe(
+    this.isLoading = true
+    this.bancoServices.createProduct(product).pipe(
       tap((products: Product[]) => {
+        this.isLoading = false
         this.showAlert = true;
         this.typeMessage = 'exitoso'
         this.alertMessage = 'Producto creado con éxito'
       }),
       catchError((error) => {
-        console.error('Error consumiendo el servicio de creación de producto:', error);
+        this.isLoading = false
+        console.log('Error consumiendo el servicio de creación de producto:', error);
         this.showAlert = true;
         this.typeMessage = 'error'
         this.alertMessage = 'Error consumiendo el servicio de creación de producto'
@@ -98,14 +102,17 @@ export class ProductInformationManagementComponent {
 
 
   editProduct(product: Product) {
-    this.bancoServices.editProduc(product).pipe(
+    this.isLoading = true
+    this.bancoServices.editProduct(product).pipe(
       tap((products: Product[]) => {
+        this.isLoading = false
         this.showAlert = true;
         this.typeMessage = 'exitoso'
         this.alertMessage = 'Producto editado con éxito'
       }),
       catchError((error) => {
-        console.error('Error consumiendo el servicio de edición de producto:', error);
+        this.isLoading = false
+        console.log('Error consumiendo el servicio de edición de producto:', error);
         this.showAlert = true;
         this.typeMessage = 'error'
         this.alertMessage = 'Error consumiendo el servicio de edición de producto'
@@ -142,7 +149,7 @@ export class ProductInformationManagementComponent {
         result = exists;
       }),
       catchError((error) => {
-        console.error('Error al verificar la existencia del ID:', error);
+        console.log('Error al verificar la existencia del ID:', error);
         this.showAlert = true;
         this.typeMessage = 'error'
         this.alertMessage = 'Error consumiendo el servicio de validar ID'

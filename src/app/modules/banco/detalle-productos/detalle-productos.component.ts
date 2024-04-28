@@ -42,15 +42,9 @@ export class DetalleProductosComponent {
 
   constructor(private bancoServices: BancoServices, private validationsUtil: ValidationsUtil,
     private router: Router, private dataSharedService: DataSharedService) {
-    this.delay(3000).then(() => {
       this.loadProducts();
       this.products = this.originalProducts;
       this.determineTotalResult();
-    });
-  }
-
-  delay(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   searchProduct() {
@@ -85,11 +79,12 @@ export class DetalleProductosComponent {
   loadProducts() {
     this.bancoServices.getProducts().pipe(
       tap((products: Product[]) => {
+        this.isLoadSkeleton = false
         this.originalProducts = products;
       }),
       catchError((error) => {
         this.originalProducts = new Array<Product>();
-        console.error('Error consumiendo el servicio consultar todos los productos:', error);
+        console.log('Error consumiendo el servicio consultar todos los productos:', error);
         this.showAlert = true;
         this.typeMessage = 'error';
         this.alertMessage = 'Error consumiendo el servicio consultar todos los productos';
@@ -111,7 +106,7 @@ export class DetalleProductosComponent {
         this.determineTotalResult()
       }),
       catchError((error) => {
-        console.error('Error consumiendo el servicio de eliminación de producto:', error);
+        console.log('Error consumiendo el servicio de eliminación de producto:', error);
         this.showAlert = true;
         this.typeMessage = 'error'
         this.alertMessage = 'Error consumiendo el servicio de eliminación de producto'
