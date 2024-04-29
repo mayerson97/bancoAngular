@@ -44,14 +44,14 @@
                     </label>
                 </div>
                 <div class="form-group">
-                    <label for="inputDateRelease">Fecha Revisión</label>
+                    <label for="inputDateRelease">Fecha Liberación</label>
                     <input
                         [ngClass]="{ 'input-invalid': isValidFormGroupStatusWithOtherValidations('inputDateRelease', 'invalid', validateInputDateRelease()), 
                                      'input-valid':  isValidFormGroupStatusWithOtherValidations('inputDateRelease', 'valid', validateInputDateRelease())}"
                         name="inputDateRelease" id="inputDateRevision" type="date" formControlName='inputDateRelease'>
                     <label for="inputDateRelease" class="label-validator"
                         *ngIf="isValidFormGroupStatusWithOtherValidations('inputDateRelease', 'invalid', validateInputDateRelease())">
-                        Fecha Revisión no válida!
+                        Fecha Liberación no válida!
                     </label>
                 </div>
                 <div class="form-group">
